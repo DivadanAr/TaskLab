@@ -1,0 +1,65 @@
+/* ===========================================================
+   THEME SYSTEM — Light / Dark
+   Dark = default (nilai asli sudah didefinisikan di global.css :root)
+   Cukup override variabel yang sama saat html[data-theme="light"]
+   =========================================================== */
+
+html[data-theme="light"] {
+  --bg-rail: #ffffff;
+  --bg-deep: #f4f5f8;
+  --bg-panel: #ffffff;
+  --bg-card: #ffffff;
+  --bg-hover: #00000008;
+  --border: #00000012;
+  --border-hi: #00000022;
+
+  --accent: #6d4bf0;
+  --accent-dim: #6d4bf01a;
+  --accent-glow: #6d4bf055;
+  --accent2: #16a34a;
+  --accent2-dim: #16a34a1a;
+
+  --text-hi: #1a1c23;
+  --text-mid: #5c6275;
+  --text-lo: #9aa0b4;
+
+  --danger: #dc2626;
+  --warn: #d97706;
+  --success: #16a34a;
+
+  --shadow-card: 0 4px 24px #00000014;
+}
+
+/* Transisi halus saat berganti tema (opsional, dibatasi supaya ringan) */
+html,
+body,
+.rail,
+.sidebar,
+.hdr,
+.content-body,
+[class*="card"],
+[class*="modal"],
+[class*="panel"] {
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+/* ===========================================================
+   Tombol toggle theme (dipakai di rail.php)
+   =========================================================== */
+.theme-toggle-btn {
+  position: relative;
+}
+
+.theme-toggle-btn .fa-sun {
+  display: none;
+}
+.theme-toggle-btn .fa-moon {
+  display: inline-block;
+}
+
+html[data-theme="light"] .theme-toggle-btn .fa-sun {
+  display: inline-block;
+}
+html[data-theme="light"] .theme-toggle-btn .fa-moon {
+  display: none;
+}

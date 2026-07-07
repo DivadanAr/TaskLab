@@ -1,0 +1,349 @@
+/* ===========================================================
+   BOARD INFO PANEL — floating panel di dalam section tasks-list
+   Dibuka lewat tombol "Info" di toolbar board-detail.
+   =========================================================== */
+
+/* Kontainer tasks-list jadi anchor relative untuk panel */
+.tasks-list.tasks-list-detail {
+  position: relative;
+  
+}
+.board-detail-list {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 67vh;
+  padding-bottom: 15px;
+}
+
+/* ===========================================================
+   BOARD INFO PANEL — docked side panel di dalam section tasks-list
+   (mirip Solution Explorer di VS: dibuka/ditutup lewat tombol,
+   mendorong konten, bukan numpuk seperti modal).
+   Dibuka lewat tombol "Info" di toolbar board-detail.
+   Tidak disimpan statenya -> reload = otomatis tertutup lagi.
+   =========================================================== */
+
+.board-detail-body {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+}
+
+.board-detail-body .tasks-list-detail {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Panel: default lebar 0 (tersembunyi), melebar saat .open */
+.board-info-panel {
+  flex-shrink: 0;
+  width: 0;
+  margin-left: 0;
+  overflow: hidden;
+  border-left: 1px solid transparent;
+  transition: width 0.22s ease, margin-left 0.22s ease, border-color 0.22s ease;
+}
+
+.board-info-panel.open {
+  width: 360px;
+  margin-left: 16px;
+  border-left: 1px solid var(--border);
+}
+
+/* Lebar isi dibuat tetap (fixed) supaya tidak ikut menyusut/gepeng
+   selagi animasi width panel berjalan */
+.board-info-panel-inner {
+  width: 360px;
+  height: 85vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-panel);
+  border: 1px solid var(--border-hi);
+  border-radius: var(--r-lg);
+}
+
+/* ---------- Header ---------- */
+
+.board-info-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 16px 16px 16px 20px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.board-info-panel-header span {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--text-mid);
+}
+
+/* ---------- Body (scrollable) ---------- */
+
+.board-info-panel-body {
+  padding: 18px 20px;
+  overflow-y: auto;
+  flex: 1;
+  height: 10px;
+}
+
+/* Nama board — inline editable, terlihat seperti judul biasa
+   sampai user klik untuk mengetik */
+.board-info-name-wrap {
+  position: relative;
+  margin-bottom: 18px;
+}
+
+.board-info-name-input {
+  width: 100%;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--r-md);
+  padding: 8px 34px 8px 10px;
+  margin: 0 -10px;
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-hi);
+  outline: none;
+  transition: 0.15s;
+}
+
+.board-info-name-input:hover {
+  background: var(--bg-hover);
+}
+
+.board-info-name-input:focus {
+  background: var(--bg-card);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px var(--accent-dim);
+}
+
+.board-info-name-wrap i {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 12px;
+  color: var(--text-lo);
+  pointer-events: none;
+}
+
+.board-info-save-hint {
+  font-size: 11px;
+  color: var(--accent2);
+  margin: -12px 0 16px 2px;
+  height: 14px;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.board-info-save-hint.show {
+  opacity: 1;
+}
+
+.board-info-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-mid);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin-bottom: 10px;
+}
+
+/* ---------- "Word-like" rich text editor ---------- */
+
+/* Mode LIHAT — halaman biasa, read-only, tapi tetap bergaya "kertas"
+   selaras dengan mode edit di bawahnya */
+.richtext-viewer {
+  position: relative;
+  min-height: 140px;
+  padding: 16px 18px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-hi);
+  border-radius: var(--r-md);
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: var(--text-hi);
+  cursor: pointer;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.richtext-viewer:hover {
+  border-color: var(--accent);
+}
+
+.richtext-viewer p {
+  margin: 0 0 8px;
+}
+
+.richtext-viewer-content > p:last-child {
+  margin-bottom: 0;
+}
+
+.richtext-viewer ul,
+.richtext-viewer ol {
+  margin: 6px 0 6px 20px;
+}
+
+.richtext-viewer-hint {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--border-hi);
+  font-size: 11px;
+  color: var(--text-lo);
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.richtext-viewer:hover .richtext-viewer-hint {
+  opacity: 1;
+  color: var(--accent);
+}
+
+/* Mode EDIT — toolbar + area ketik, cuma tampil saat sedang diedit */
+
+.richtext-wrap {
+  border: 1px solid var(--border-hi);
+  border-radius: var(--r-md);
+  overflow: hidden;
+  background: var(--bg-card);
+}
+
+.richtext-toolbar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2px;
+  padding: 6px;
+  background: var(--bg-rail);
+  border-bottom: 1px solid var(--border);
+}
+
+.richtext-toolbar button {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  border-radius: var(--r-sm);
+  color: var(--text-mid);
+  font-size: 12px;
+  cursor: pointer;
+  transition: 0.15s;
+}
+
+.richtext-toolbar button:hover {
+  background: var(--bg-hover);
+  color: var(--text-hi);
+}
+
+.richtext-toolbar button.active {
+  background: var(--accent-dim);
+  color: var(--accent);
+}
+
+.richtext-sep {
+  width: 1px;
+  height: 18px;
+  background: var(--border-hi);
+  margin: 0 4px;
+  flex-shrink: 0;
+}
+
+.richtext-editor {
+  min-height: 220px;
+  max-height: 340px;
+  overflow-y: auto;
+  padding: 16px 18px;
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: var(--text-hi);
+  outline: none;
+}
+
+.richtext-editor:empty::before {
+  content: attr(data-placeholder);
+  color: var(--text-lo);
+}
+
+.richtext-editor ul,
+.richtext-editor ol {
+  margin: 6px 0 6px 20px;
+}
+
+.richtext-editor p {
+  margin: 0 0 8px;
+}
+
+.richtext-editor:focus {
+  box-shadow: inset 0 0 0 2px var(--accent-dim);
+}
+
+/* ---------- Footer ---------- */
+
+.board-info-panel-footer {
+  padding: 14px 20px;
+  border-top: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.btn-delete-board {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 16px;
+  background: transparent;
+  border: 1px solid var(--danger);
+  border-radius: var(--r-md);
+  color: var(--danger);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.15s;
+}
+
+.btn-delete-board:hover {
+  background: var(--danger);
+  color: #fff;
+}
+
+@media (max-width: 900px) {
+  .board-detail-body {
+    flex-direction: column;
+  }
+
+  .board-info-panel {
+    width: 100%;
+    height: 0;
+    margin-left: 0;
+    border-left: none;
+    border-top: 1px solid transparent;
+    transition: height 0.22s ease, margin-top 0.22s ease, border-color 0.22s ease;
+  }
+
+  .board-info-panel.open {
+    width: 100%;
+    height: 420px;
+    margin-left: 0;
+    margin-top: 16px;
+    border-top: 1px solid var(--border);
+  }
+
+  .board-info-panel-inner {
+    width: 100%;
+  }
+}
