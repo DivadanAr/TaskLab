@@ -40,14 +40,13 @@ $env = parse_ini_file('.env');
 
     <main>
 
-        <!-- ================= HERO ================= -->
         <section class="lp-hero">
             <div class="lp-hero-copy">
-                <span class="lp-eyebrow"><i class="fa-solid fa-sparkles"></i> Dibuat untuk tim kecil yang gerak cepat</span>
+                <span class="lp-eyebrow"><i class="fa-solid fa-sparkles"></i> To-Do</span>
                 <h1>Satu board untuk<br>semua tugas timmu.</h1>
                 <p class="lp-hero-sub">
-                    TaskLab menggabungkan board kanban, chat tim, dan undangan kolaborasi
-                    dalam satu tempat — supaya kamu berhenti bolak-balik antar aplikasi.
+                    TaskLab menggabungkan board, chat tim, dan undangan kolaborasi
+                    dalam satu tempat, supaya kamu berhenti bolak-balik antar aplikasi.
                 </p>
                 <div class="lp-hero-actions">
                     <a href="register.php" class="lp-btn lp-btn-primary lp-btn-lg">
@@ -88,14 +87,13 @@ $env = parse_ini_file('.env');
             </div>
         </section>
 
-        <!-- ================= LOGOS / TRUST (ringkas) ================= -->
+        <!-- ================= LOGOS / TRUST (ringkas) =================
         <section class="lp-stats">
             <div class="lp-stat"><strong>3-in-1</strong><span>Board, chat, undangan</span></div>
             <div class="lp-stat"><strong>Real-time</strong><span>Update tanpa refresh</span></div>
             <div class="lp-stat"><strong>Gratis</strong><span>Untuk tim kecil</span></div>
         </section>
-
-        <!-- ================= FITUR ================= -->
+ -->
         <section class="lp-features" id="fitur">
             <p class="lp-section-eyebrow">Fitur</p>
             <h2 class="lp-section-title">Semua yang tim kamu butuh, sudah ada di dalam</h2>
@@ -103,12 +101,12 @@ $env = parse_ini_file('.env');
             <div class="lp-feature-grid">
                 <div class="lp-feature-card">
                     <div class="lp-feature-icon lp-feature-icon-purple"><i class="fa-solid fa-table-cells-large"></i></div>
-                    <h3>Board Kanban</h3>
-                    <p>Atur tugas jadi kolom dan kartu yang bisa digeser sesuai progres, dari ide sampai selesai.</p>
+                    <h3>Board</h3>
+                    <p>Atur tugasmu sesuai progres, dari ide sampai selesai.</p>
                 </div>
                 <div class="lp-feature-card">
                     <div class="lp-feature-icon lp-feature-icon-green"><i class="fa-regular fa-comments"></i></div>
-                    <h3>Chat Tim</h3>
+                    <h3>Comment Tim</h3>
                     <p>Diskusi langsung di dalam board, tanpa perlu pindah ke aplikasi chat lain.</p>
                 </div>
                 <div class="lp-feature-card">
@@ -124,7 +122,6 @@ $env = parse_ini_file('.env');
             </div>
         </section>
 
-        <!-- ================= CARA KERJA ================= -->
         <section class="lp-steps" id="alur">
             <p class="lp-section-eyebrow">Cara Kerja</p>
             <h2 class="lp-section-title">Mulai dalam tiga langkah</h2>
@@ -148,7 +145,6 @@ $env = parse_ini_file('.env');
             </div>
         </section>
 
-        <!-- ================= CTA ================= -->
         <section class="lp-cta">
             <h2>Siap merapikan alur kerja timmu?</h2>
             <p>Gratis untuk mulai, tidak perlu setup rumit.</p>
