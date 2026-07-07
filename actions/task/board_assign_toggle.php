@@ -28,13 +28,5 @@ if ($existing) {
     mysqli_stmt_bind_param($stmt, "ii", $board_id, $user_id);
     mysqli_stmt_execute($stmt);
 
-    $msg = "Kamu ditugaskan ke sebuah tugas";
-    $stmt2 = mysqli_prepare($conn, "
-        INSERT INTO notifications (user_id, type, message, reference_id, is_read, created_at)
-        VALUES (?, '', ?, ?, 0, NOW())
-    ");
-    mysqli_stmt_bind_param($stmt2, "isi", $user_id, $msg, $board_id);
-    mysqli_stmt_execute($stmt2);
-
     echo json_encode(["success" => true, "assigned" => true]);
 }

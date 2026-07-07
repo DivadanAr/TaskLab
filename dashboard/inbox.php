@@ -74,9 +74,6 @@ if (!isset($_SESSION['user_id'])) {
                         </button>
                         <button class="inbox-tab" onclick="Inbox.switchTab(this, 'notifications')">
                             Notifikasi
-                            <?php if ($unreadNotifCount > 0): ?>
-                                <span class="pill"><?= $unreadNotifCount ?></span>
-                            <?php endif; ?>
                         </button>
                     </div>
 
@@ -129,17 +126,45 @@ if (!isset($_SESSION['user_id'])) {
                     </div>
 
                     <!-- ============ TAB: NOTIFIKASI LAIN ============ -->
-                    <div class="inbox-list" data-inbox-panel="notifications" style="display:none;">
+                    <?php if (mysqli_num_rows($notifications) > 0): ?>
+                        <div class="inbox-list" data-inbox-panel="notifications" style="display:none;">
+
+                            <div id="inviteList" style="display:contents;">
 
 
+                                <?php while ($notif = mysqli_fetch_assoc($notifications)): ?>
+                                    <div class="invite-card">
+                                        <div class="invite-card-icon"><?= getInitials($notif['board_name']) ?></div>
+                                        <div class="invite-card-body">
+                                            <div class="invite-card-text">
+                                                <b><?= htmlspecialchars($notif['sender_name']) ?></b> mengundang kamu untuk berkolaborasi di board
+                                                <span class="board-name"><?= htmlspecialchars($notif['board_name']) ?></span>
+                                            </div>
+                                            <div class="invite-card-meta">
+                                                <div class="inviter-avatar"><?= getInitials($notif['sender_name']) ?></div>
+                                                <span>Diundang <?= timeAgoID($notif['invited_at']) ?></span>
+                                            </div>
+                                        </div>
+                                        <div class="invite-card-actions">
+                                            <div class="btn-invite-decline">
+                                                <?= $notif['status'] ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php endwhile; ?>
 
-                        <div class="empty-state">
-                            <i class="fa-solid fa-bell-slash"></i>
-                            <p>Belum ada notifikasi.</p>
+
+                            </div>
+                        <?php else: ?>
+
+                            <div class="empty-state">
+                                <i class="fa-solid fa-bell-slash"></i>
+                                <p>Belum ada notifikasi.</p>
+                            </div>
+                        <?php endif; ?>
+
+
                         </div>
-
-
-                    </div>
 
                 </div>
             </main>

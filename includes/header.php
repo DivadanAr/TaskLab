@@ -4,7 +4,7 @@ $page_title = $page_title ?? 'Dashboard';
 
 $userName  = $_SESSION['user_name']  ?? 'Pengguna';
 $userEmail = $_SESSION['user_email'] ?? '';
-$userId    = $_SESSION['user_id']    ?? 0;
+$userId    = $_SESSION['user_id'];
 function getInitials($name)
 {
     $name  = trim($name);
@@ -54,16 +54,16 @@ $userInitials = getInitials($userName);
                 aria-label="Buka menu profil"
                 aria-expanded="false"
                 onclick="Profile.toggle()">
-                DA
+                <?= getInitials($userName) ?>
             </button>
 
             <div class="profile-dropdown" id="profileDropdown">
 
                 <div class="profile-dropdown-header">
-                    <div class="rail-avatar profile-dropdown-avatar">DA</div>
+                    <div class="rail-avatar profile-dropdown-avatar"><?= getInitials($userName) ?></div>
                     <div class="profile-dropdown-info">
-                        <p class="profile-dropdown-name">Divadan</p>
-                        <p class="profile-dropdown-email">divadan@gmail.com</p>
+                        <p class="profile-dropdown-name"><?= $userName ?></p>
+                        <p class="profile-dropdown-email"><?= $userEmail ?></p>
                     </div>
                 </div>
 
@@ -130,21 +130,23 @@ $userInitials = getInitials($userName);
         <input type="hidden" name="user_id" value="">
 
         <div class="profile-panel-avatar-row">
-            <div class="rail-avatar profile-panel-avatar" id="profilePanelAvatar"></div>
+            <div class="rail-avatar profile-panel-avatar" id="profilePanelAvatar">
+                <?= getInitials($userName) ?>
+            </div>
             <div>
-                <p class="profile-panel-avatar-name" id="profilePanelAvatarName"></p>
-                <p class="profile-panel-avatar-hint">Inisial otomatis dari nama</p>
+                <p class="profile-panel-avatar-name" id="profilePanelAvatarName"><?= $userName ?></p>
+                <p class="profile-panel-avatar-hint"><?= $userEmail ?></p>
             </div>
         </div>
 
         <div class="form-group">
             <label for="profile_name">Nama Lengkap</label>
-            <input type="text" id="profile_name" name="user_name" value="" required>
+            <input type="text" id="profile_name" name="user_name" value="<?= $userName ?>" required>
         </div>
 
         <div class="form-group">
             <label for="profile_email">Email</label>
-            <input type="email" id="profile_email" name="user_email" value="" required>
+            <input type="email" id="profile_email" name="user_email" value="<?= $userEmail ?>" required>
         </div>
 
         <div class="profile-panel-divider"></div>
@@ -251,6 +253,41 @@ $userInitials = getInitials($userName);
 
         const formData = new FormData(this);
 
-        setTimeout(() => ProfilePanel.close(), 900);
+
+        fetch('../actions/profile_update.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(res => res.json())
+            .then(data => {
+                saveBtn.disabled = false;
+                saveBtn.textContent = 'Simpan Perubahan';
+
+                if (data.success) {
+                    messageEl.textContent = 'Profil berhasil diperbarui.';
+                    messageEl.classList.add('success');
+
+                    const newName = document.getElementById('profile_name').value;
+                    const initials = newName.trim().split(/\s+/).filter(Boolean)
+                        .slice(0, 2).map((w, i, arr) => arr.length === 1 ? w[0] : w[0]).join('').toUpperCase();
+
+                    document.getElementById('profilePanelAvatarName').textContent = newName;
+                    document.querySelectorAll('.rail-avatar').forEach(el => {
+                        if (!el.closest('.profile-panel') && !el.closest('.profile-dropdown')) return;
+                    });
+
+                    setTimeout(() => ProfilePanel.close(), 900);
+                    setTimeout(() => location.reload(), 1000);
+                } else {
+                    messageEl.textContent = data.message || 'Gagal memperbarui profil.';
+                    messageEl.classList.add('error');
+                }
+            })
+            .catch(() => {
+                saveBtn.disabled = false;
+                saveBtn.textContent = 'Simpan Perubahan';
+                messageEl.textContent = 'Terjadi kesalahan jaringan.';
+                messageEl.classList.add('error');
+            });
     });
 </script>
