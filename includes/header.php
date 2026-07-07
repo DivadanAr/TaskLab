@@ -33,7 +33,7 @@ $userInitials = getInitials($userName);
 
     <div class="hdr-left">
         <i class="fa-solid fa-list-check"></i>
-        <h1 class="hdr-page-title" id="pageTitle"><?= $userId ?></h1>
+        <h1 class="hdr-page-title" id="pageTitle"><?= $page_title ?></h1>
     </div>
 
     <div class="hdr-right">

@@ -5,6 +5,8 @@ include "../actions/board/detail_board_get.php";
 include "../actions/board/board_collab_get.php";
 include "../actions/collaboration/invite_helper.php";
 
+$page_title = $board['board_name'] . ' Board';
+
 if (!isset($_SESSION['user_id'])) {
     header("Location: ../login.php");
     exit;

@@ -3,6 +3,8 @@
 include "../actions/my-board/my-starred_board_get.php";
 include "../actions/connection.php";
 
+$page_title = 'Favorite Board';
+
 if (!isset($_SESSION['user_id'])) {
     header("Location: ../login.php");
     exit;

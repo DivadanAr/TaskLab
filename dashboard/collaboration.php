@@ -2,10 +2,14 @@
 
 include "../actions/collaboration/collaboration_get.php";
 include "../actions/connection.php";
+
+$page_title = 'Collaboration Board';
+
 if (!isset($_SESSION['user_id'])) {
     header("Location: ../login.php");
     exit;
 }
+
 ?>
 
 <!DOCTYPE html>

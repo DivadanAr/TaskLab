@@ -3,6 +3,8 @@
 include "../actions/connection.php";
 include "../actions/collaboration/inbox_get.php";
 
+$page_title = 'Inbox';
+
 $invitationCount = mysqli_num_rows($invitations);
 if (!isset($_SESSION['user_id'])) {
     header("Location: ../login.php");

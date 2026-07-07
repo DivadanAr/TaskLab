@@ -4,6 +4,8 @@ include "../actions/my-board/my-board_get.php";
 include "../actions/my-board/my-starred_board_get.php";
 include "../actions/connection.php";
 
+$page_title = 'My Board';
+
 if (!isset($_SESSION['user_id'])) {
     header("Location: ../login.php");
     exit;
