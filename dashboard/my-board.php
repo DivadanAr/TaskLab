@@ -64,13 +64,14 @@ if (!isset($_SESSION['user_id'])) {
                                         <button class="board-card-star <?= $board['starred'] ? "starred" : "" ?>" aria-label="Tandai sebagai favorit">
                                             <i class="fa-solid fa-star"></i>
                                         </button>
-                                        <?php if ($board['cover_board'] !== null): ?>
+                                        <?php if (!empty($board['cover_board'])): ?>
+                                            <img class="board-card-image" src="<?= $board['cover_board'] ?>" alt="Board">
+                                        <?php else : ?>
                                             <div class="board-card-placeholder">
                                                 <?= getInitials($board['board_name']) ?>
                                             </div>
-                                        <?php else : ?>
-                                            <img class="board-card-image" src="https://picsum.photos/400/200?2" alt="Board">
                                         <?php endif ?>
+
                                         <div class="board-card-content">
                                             <span class="board-card-title"><?= $board['board_name'] ?></span>
                                         </div>
